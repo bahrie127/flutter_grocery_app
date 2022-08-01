@@ -1,16 +1,38 @@
 # flutter_grocery_ui
 
-A new Flutter project.
+Layouting the UI for Grocery App Toko Sayur dan Buah
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Widget
 
-A few resources to get you started if this is your first Flutter project:
+- GridView.Builder
+- Card
+- Hero
+- IconButton
+- Gesuture Detector
+- Navigator push
+- Navigator pop
+- Data Class
+- Column
+- Row
+- Image Asset
+- App Bar
+- Stateful widget
+- Stateless widget
+- setState
+- AspectRatio
+- SizedBox
+- Container
+- Text
+- TextStyle
+- Scaffold
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ScreenShot
+
+| Home        | Submit    |
+|--------------|-----------|
+| <img src="image1.png" width="300"/> | <img src="image2.png" width="300"/>      |
+
+
+
