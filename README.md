@@ -1,7 +1,12 @@
-# flutter_grocery_ui
+# Flutter Grocery UI
 
 Layouting the UI for Grocery App Toko Sayur dan Buah
 
+## Youtube Link
+
+[![Watch the video](https://img.youtube.com/vi/Ih2Joj9hgys/sddefault.jpg)](https://youtu.be/Ih2Joj9hgys)
+
+https://youtu.be/Ih2Joj9hgys
 
 ## Widget
 
@@ -30,7 +35,7 @@ Layouting the UI for Grocery App Toko Sayur dan Buah
 
 ## ScreenShot
 
-| Home        | Submit    |
+| Home        | Detail    |
 |--------------|-----------|
 | <img src="image1.png" width="300"/> | <img src="image2.png" width="300"/>      |
 
