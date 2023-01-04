@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_grocery_ui/data.dart';
 import 'package:flutter_grocery_ui/product_detail.dart';
 
+import 'models/product.dart';
+
 class ItemWidget extends StatelessWidget {
   const ItemWidget({
     Key? key,
@@ -33,17 +35,17 @@ class ItemWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Hero(
-              tag: product.image,
+              tag: product.images[0],
               child: SizedBox(
                 width: 150,
-                child: Image.asset(product.image),
+                child: Image.network(product.images[0]),
               ),
             ),
             const SizedBox(
-              height: 6,
+              height: 8,
             ),
             Text(
-              'Rp ${product.price}',
+              'USD ${product.price}',
               style: const TextStyle(
                 color: Colors.green,
                 fontSize: 20,
@@ -51,75 +53,86 @@ class ItemWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 2,
-            ),
-            Text(
-              product.name,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const SizedBox(
-              height: 2,
-            ),
-            Text(
-              product.quantity,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
-            const SizedBox(
               height: 4,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                product.title,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            // const SizedBox(
+            //   height: 2,
+            // ),
+            // Text(
+            //   product.price.toString(),
+            //   style: const TextStyle(
+            //     fontSize: 18,
+            //     fontWeight: FontWeight.w300,
+            //   ),
+            // ),
+            const SizedBox(
+              height: 8,
             ),
             const Divider(
               height: 2,
               color: Colors.grey,
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Row(
-                  children: const [
-                    Icon(
-                      Icons.add_shopping_cart,
-                      size: 20,
-                      color: Colors.green,
-                    ),
-                    SizedBox(
-                      width: 2,
-                    ),
-                    Text(
-                      "Beli",
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
                 const SizedBox(
-                  width: 8,
+                  height: 10,
                 ),
                 Row(
-                  children: const [
-                    Icon(
-                      Icons.remove_circle_outline,
-                      size: 18,
-                      color: Colors.green,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      children: const [
+                        Icon(
+                          Icons.add_shopping_cart,
+                          size: 20,
+                          color: Colors.green,
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        Text(
+                          "Beli",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5),
-                      child: Text('0'),
+                    const SizedBox(
+                      width: 8,
                     ),
-                    Icon(
-                      Icons.add_circle_outline,
-                      size: 18,
-                      color: Colors.green,
+                    Row(
+                      children: const [
+                        Icon(
+                          Icons.remove_circle_outline,
+                          size: 18,
+                          color: Colors.green,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: Text('0'),
+                        ),
+                        Icon(
+                          Icons.add_circle_outline,
+                          size: 18,
+                          color: Colors.green,
+                        ),
+                      ],
                     ),
                   ],
                 ),

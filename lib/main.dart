@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_grocery_ui/item_widget.dart';
 
+import 'bloc/product_bloc.dart';
 import 'data.dart';
 
 void main() {
@@ -12,13 +14,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return BlocProvider(
+      create: (context) => ProductBloc()..add(GetProductEvent()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MainPage(),
       ),
-      home: const MainPage(),
     );
   }
 }
@@ -31,13 +36,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final data = Product(
-    'Bayam',
-    '2.000',
-    '1ikat',
-    'assets/img1.png',
-    'Secara umum sayuran dan buah-buahan merupakan sumber berbagai vitamin, mineral, dan serat pangan. Sebagian vitamin dan mineral yang terkandung dalam sayuran dan buah-buahan berperan untuk membantu proses-proses metabolisme di dalam tubuh, sedangkan antioksidan mampu menangkal senyawa-senyawa hasil oksidasi, radikal bebas, yang mampu menurunkan kondisi kesehatan tubuh',
-  );
+  // final data = Product(
+  //   'Bayam',
+  //   '2.000',
+  //   '1ikat',
+  //   'assets/img1.png',
+  //   'Secara umum sayuran dan buah-buahan merupakan sumber berbagai vitamin, mineral, dan serat pangan. Sebagian vitamin dan mineral yang terkandung dalam sayuran dan buah-buahan berperan untuk membantu proses-proses metabolisme di dalam tubuh, sedangkan antioksidan mampu menangkal senyawa-senyawa hasil oksidasi, radikal bebas, yang mampu menurunkan kondisi kesehatan tubuh',
+  // );
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +55,7 @@ class _MainPageState extends State<MainPage> {
           color: Colors.black,
         ),
         title: const Text(
-          'Toko Buah & Sayur',
+          'Online Store',
           style: TextStyle(color: Colors.black),
         ),
         actions: [
@@ -96,20 +101,34 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.all(10),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            crossAxisCount: 2,
-            childAspectRatio: 0.6,
-          ),
-          itemBuilder: (context, index) {
-            return ItemWidget(product: allData[index]);
-          },
-          itemCount: allData.length,
-        ),
+      body: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is ProductLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (state is ProductSuccess) {
+            return Container(
+              padding: const EdgeInsets.all(10),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.65,
+                ),
+                itemBuilder: (context, index) {
+                  return ItemWidget(product: state.products[index]);
+                },
+                itemCount: state.products.length,
+              ),
+            );
+          }
+          return const Center(
+            child: Text('No Data'),
+          );
+        },
       ),
     );
   }
