@@ -1,43 +1,24 @@
-# Flutter Grocery UI
+# Flutter Online Store Flutter Bloc
 
-Layouting the UI for Grocery App Toko Sayur dan Buah
+Sample apps using flutter bloc, http, fakeapi.platzi.com study case online store
 
 ## Youtube Link
 
-[![Watch the video](https://img.youtube.com/vi/Ih2Joj9hgys/sddefault.jpg)](https://youtu.be/Ih2Joj9hgys)
+[![Watch the video](https://img.youtube.com/vi/McdoCn94yis/sddefault.jpg)](https://youtu.be/McdoCn94yis)
 
-https://youtu.be/Ih2Joj9hgys
-
-## Widget
-
-- GridView.Builder
-- Card
-- Hero
-- IconButton
-- Gesuture Detector
-- Navigator push
-- Navigator pop
-- Data Class
-- Column
-- Row
-- Image Asset
-- App Bar
-- Stateful widget
-- Stateless widget
-- setState
-- AspectRatio
-- SizedBox
-- Container
-- Text
-- TextStyle
-- Scaffold
-
+https://youtu.be/McdoCn94yis
 
 ## ScreenShot
 
 | Home        | Detail    |
 |--------------|-----------|
-| <img src="image1.png" width="300"/> | <img src="image2.png" width="300"/>      |
+| <img src="1.png" width="300"/> | <img src="2.png" width="300"/>      |
 
-
+## Contact:
+* Consultation Flutter and Endorse https://t.me/bahri_bhe
+* Youtube: https://youtube.com/@codewithbahri
+* Github: https://github.com/bahrie127
+* Linkedin: https://linkedin.com/in/bahrie
+* Roadmap Flutter: https://youtu.be/e2zMJqDBmoY
+* Medium: https://medium.com/@bahri
 
