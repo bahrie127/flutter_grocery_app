@@ -4,8 +4,10 @@ import 'package:flutter_grocery_ui/item_widget.dart';
 
 import 'bloc/product_bloc.dart';
 import 'data.dart';
+import 'models/product.dart';
 
 void main() {
+  Bloc.observer = GroceryBlocObserver();
   runApp(const MyApp());
 }
 
@@ -36,13 +38,18 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  // final data = Product(
-  //   'Bayam',
-  //   '2.000',
-  //   '1ikat',
-  //   'assets/img1.png',
-  //   'Secara umum sayuran dan buah-buahan merupakan sumber berbagai vitamin, mineral, dan serat pangan. Sebagian vitamin dan mineral yang terkandung dalam sayuran dan buah-buahan berperan untuk membantu proses-proses metabolisme di dalam tubuh, sedangkan antioksidan mampu menangkal senyawa-senyawa hasil oksidasi, radikal bebas, yang mampu menurunkan kondisi kesehatan tubuh',
-  // );
+  final controller = ScrollController();
+  List<Product> products = [];
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        context.read<ProductBloc>().add(LoadMoreProductEvent());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,35 +108,72 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      body: BlocBuilder<ProductBloc, ProductState>(
-        builder: (context, state) {
-          if (state is ProductLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state is ProductSuccess) {
-            return Container(
-              padding: const EdgeInsets.all(10),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.65,
-                ),
-                itemBuilder: (context, index) {
-                  return ItemWidget(product: state.products[index]);
-                },
-                itemCount: state.products.length,
-              ),
-            );
-          }
-          return const Center(
-            child: Text('No Data'),
-          );
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<ProductBloc>().add(GetProductEvent());
         },
+        child: BlocListener<ProductBloc, ProductSuccess>(
+          listener: (context, state) {
+            if (state.status == Status.loading) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Loading More...')));
+            }
+          },
+          child: BlocBuilder<ProductBloc, ProductSuccess>(
+            builder: (context, state) {
+              if (state.status == Status.initial) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state.status == Status.success) {
+                products = state.products!;
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                // return Container(
+                //   padding: const EdgeInsets.all(10),
+                //   child: GridView.builder(
+                //     controller: controller,
+                //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                //       mainAxisSpacing: 10,
+                //       crossAxisSpacing: 10,
+                //       crossAxisCount: 2,
+                //       childAspectRatio: 0.65,
+                //     ),
+                //     itemBuilder: (context, index) {
+                //       return ItemWidget(product: products[index]);
+                //     },
+                //     itemCount: products.length,
+                //   ),
+                // );
+              }
+              return Container(
+                padding: const EdgeInsets.all(10),
+                child: GridView.builder(
+                  controller: controller,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.65,
+                  ),
+                  itemBuilder: (context, index) {
+                    return ItemWidget(product: products[index]);
+                  },
+                  itemCount: products.length,
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
+  }
+}
+
+class GroceryBlocObserver extends BlocObserver {
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    print('${bloc.runtimeType} $change');
   }
 }
