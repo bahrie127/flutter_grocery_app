@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_grocery_ui/data.dart';
 
+import 'models/product.dart';
+
 class ProductDetail extends StatefulWidget {
   const ProductDetail({
     Key? key,
@@ -61,21 +63,25 @@ class _ProductDetailState extends State<ProductDetail> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const SizedBox(
+            height: 8.0,
+          ),
           Text(
-            widget.product.name,
+            widget.product.title,
+            maxLines: 2,
             style: const TextStyle(
-              fontSize: 50,
+              fontSize: 30,
               fontWeight: FontWeight.w700,
             ),
           ),
           Center(
             child: Hero(
-              tag: widget.product.image,
+              tag: widget.product.images[0],
               child: Container(
                 height: MediaQuery.of(context).size.height * 0.45,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(widget.product.image),
+                        image: NetworkImage(widget.product.images[0]),
                         fit: BoxFit.contain)),
               ),
             ),
@@ -86,14 +92,14 @@ class _ProductDetailState extends State<ProductDetail> {
             child: Row(
               children: [
                 Text(
-                  'Rp. ${widget.product.price}',
+                  'USD ${widget.product.price}',
                   style: const TextStyle(
                       color: Colors.green,
                       fontSize: 30,
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  ' /${widget.product.quantity}',
+                  ' /${widget.product.price}',
                   style: const TextStyle(
                       color: Colors.green,
                       fontSize: 20,
