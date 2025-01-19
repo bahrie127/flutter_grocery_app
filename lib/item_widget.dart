@@ -38,7 +38,7 @@ class ItemWidget extends StatelessWidget {
               tag: product.images[0],
               child: SizedBox(
                 width: 150,
-                child: Image.network(product.images[0]),
+                child: Image.network('https://picsum.photos/${product.id}'),
               ),
             ),
             const SizedBox(
